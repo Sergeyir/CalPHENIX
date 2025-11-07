@@ -2,4 +2,4 @@
 ---
 status: main # required field for checking the file application
 collision_system_name: HeAu200
-collision_system_name_tex: 'HeAu, #sqrt{s_NN}} = 200 GeV'
+collision_system_name_tex: 'He+Au, #sqrt{s_NN}} = 200 GeV'
