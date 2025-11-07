@@ -1,0 +1,5 @@
+# This file contains all important information about Run14HeAuMinBias run
+---
+status: main # required field for checking the file application
+collision_system_name: pp200
+collision_system_name_tex: 'p+p, #sqrt{s_NN}} = 200 GeV'
