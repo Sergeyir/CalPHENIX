@@ -205,6 +205,10 @@ void SigmalizedResiduals::PerformFitsForDifferentCentrAndZDC(const unsigned int 
       (TFile::Open((outputDir + detectorName + "/all_fits_" + variableName[variableBin] + 
                     ".root").c_str(), "RECREATE"));
 
+   //TFile parametersOutputR((outputDir + "CalibrationParameters/sigmalized_residuals_cal_" + 
+   //                         detectorName + ".root").c_str(), "RECREATE");
+   //parametersOutputR.mkdir(detectorName.c_str());
+
    for (int charge : particleCharges)
    {
       const std::string chargeName = ((charge > 0) ? "charge>0" : "charge<0");
@@ -228,8 +232,19 @@ void SigmalizedResiduals::PerformFitsForDifferentCentrAndZDC(const unsigned int 
       const unsigned int numberOfParametersFitSigmas = 
          ROOTTools::GetNumberOfParameters(sigmasFitFunc);
 
+      //TParameter<int> numberOfParametersFitMeansR(("number of fit parameters for " + 
+      //                                             variableName[variableBin] + " means").c_str(), 
+      //                                            numberOfParametersFitMeans);
+      //TParameter<int> numberOfParametersFitSigmasR(("number of fit parameters for " +
+      //                                              variableName[variableBin] + " sigmas").c_str(), 
+      //                                             numberOfParametersFitSigmas);
+
       parametersOutput << numberOfParametersFitMeans << " " << 
                           numberOfParametersFitSigmas << std::endl;
+
+      //parametersOutputR.cd(detectorName.c_str());
+      //numberOfParametersFitMeansR.Write();
+      //numberOfParametersFitSigmasR.Write();
 
       for (unsigned int centralityBin = 0; centralityBin < 
            inputYAMLCal["centrality_bins"].size(); centralityBin++)
@@ -272,6 +287,7 @@ void SigmalizedResiduals::PerformFitsForDifferentCentrAndZDC(const unsigned int 
                                        zDCRanges.size() - 1, &zDCRanges[0],
                                        pTRanges.size() - 1, &pTRanges[0]);
 
+         int zDCBin = 0;
          for (const YAML::Node& zDC : inputYAMLCal["zdc_bins"])
          { 
             numberOfCalls++;
@@ -363,17 +379,34 @@ void SigmalizedResiduals::PerformFitsForDifferentCentrAndZDC(const unsigned int 
                }
             }
 
+            //parametersOutputR.cd(detectorName.c_str());
+
+            //TArrayD meansParametersR(fVMeansVsPT.back().GetNpar());
+
             for (int i = 0; i < fVMeansVsPT.back().GetNpar(); i++)
             {
                parametersOutput << fVMeansVsPT.back().GetParameter(i) << " ";
+               //meansParametersR[i] = fVMeansVsPT.back().GetParameter(i);
             }
+
+            //TArrayD sigmasParametersR(fVSigmasVsPT.back().GetNpar());
 
             for (int i = 0; i < fVSigmasVsPT.back().GetNpar(); i++)
             {
                parametersOutput << fVSigmasVsPT.back().GetParameter(i);
                if (i < fVSigmasVsPT.back().GetNpar() - 1) parametersOutput << " ";
+               //sigmasParametersR[i] = fVSigmasVsPT.back().GetParameter(i);
             }
             parametersOutput << std::endl;
+
+            //parametersOutputR.WriteObject(&meansParametersR, (detectorName + "_" +
+            //                              variableName[variableBin] + "_means_c" + 
+            //                               std::to_string(centralityBin) + 
+            //                               "_z" + std::to_string(zDCBin)).c_str());
+            //parametersOutputR.WriteObject(&sigmasParametersR, (detectorName + "_" +
+            //                              variableName[variableBin] + "_sigmas_c" + 
+            //                               std::to_string(centralityBin) + 
+            //                               "_z" + std::to_string(zDCBin)).c_str());
 
             // filling 2D histograms with weights as fit parameters means and sigmas
             for (int i = 0; i < grVMeansVsPT.back().GetN(); i++)
@@ -409,6 +442,7 @@ void SigmalizedResiduals::PerformFitsForDifferentCentrAndZDC(const unsigned int 
                                           std::to_string(variableBin));
                progressFile << numberOfCalls;
             }
+            zDCBin++;
          }
 
          double meanYMin = 1e31, meanYMax = -1e31;

@@ -22,6 +22,7 @@
 #include "TROOT.h"
 #include "TStyle.h"
 #include "TGraphErrors.h"
+#include "TParameter.h"
 #include "TLatex.h"
 #include "TLine.h"
 #include "TLegend.h"
