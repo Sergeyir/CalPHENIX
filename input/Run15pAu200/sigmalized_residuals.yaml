@@ -19,8 +19,8 @@ detectors_to_calibrate:
     abs_max_fit_dz: 7
   -
     name: TOFw
-    means_fit_func_dphi_pos: 'p[0] + p[1]/(x[0]*x[0]) + p[2]/(x[0]*x[0]*x[0]) + exp(p[3] + p[4]*x[0]) + p[5]*x[0]'
-    means_fit_func_dphi_neg: 'p[0] + p[1]/x[0] + p[2]/(x[0]*x[0]) + p[3]/(x[0]*x[0]*x[0]) + p[4]/(x[0]*x[0]*x[0]*x[0]) + p[5]*x[0]'
+    means_fit_func_dphi_pos: 'p[0] + p[1]/x[0] + p[2]/(x[0]*x[0]) + p[3]/(x[0]*x[0]*x[0])'
+    means_fit_func_dphi_neg: 'p[0] + p[1]/x[0] + p[2]/(x[0]*x[0]) + p[3]/(x[0]*x[0]*x[0])'
     means_fit_func_dz_pos: 'p[0] + p[1]/x[0] + p[2]*x[0]'
     means_fit_func_dz_neg: 'p[0] + p[1]/x[0] + p[2]*x[0]'
     sigmas_fit_func_dphi_pos: 'p[0] + p[1]/x[0] + p[2]*x[0]'
