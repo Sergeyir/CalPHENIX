@@ -191,13 +191,6 @@ void SigmalizedResiduals::PerformFitsForDifferentCentrAndZDC(const unsigned int 
 
       recalOutput << "1 1" << std::endl;
 
-      const std::string meansFitFunc = 
-         detector["means_fit_func_s" + variableName[variableBin] + 
-                  "_" + chargeNameShort].as<std::string>();
-      const std::string sigmasFitFunc = 
-         detector["sigmas_fit_func_s" + variableName[variableBin] + 
-                  "_" + chargeNameShort].as<std::string>();
-
       for (unsigned int centralityBin = 0; centralityBin < 
            inputYAMLCal["centrality_bins"].size(); centralityBin++)
       {
