@@ -639,8 +639,8 @@ void SigmalizedResiduals::PerformFitsForDifferentPT(TH3F *hist, TGraphErrors &gr
          distrVariableProj->Fit(&fitFuncDValAltLeft[i], "RQMBNL");
       }
 
-      if (fabs(fitFuncDVal.back().GetParameter(1)) > 1. ||
-          fabs(fitFuncDVal.back().GetParameter(2) - 1.) > 1.) continue;
+      if (fabs(fitFuncDVal.back().GetParameter(1)) > 5. ||
+          fabs(fitFuncDVal.back().GetParameter(2)) > 5.) continue;
 
       grMeans.AddPoint(pT, fitFuncDVal.back().GetParameter(1));
       grSigmas.AddPoint(pT, fabs(fitFuncDVal.back().GetParameter(2)));
