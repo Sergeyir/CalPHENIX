@@ -1,4 +1,4 @@
-# This file contains all important information about Run14HeAuMinBias run
+# This file contains all important information about the run
 ---
 status: main # required field for checking the file application
 collision_system_name: pAl200

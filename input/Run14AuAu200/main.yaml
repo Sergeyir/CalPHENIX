@@ -1,5 +1,5 @@
 # This file contains all important information about the run
 ---
 status: main # required field for checking the file application
-collision_system_name: pAu200
-collision_system_name_tex: 'p+Au, #sqrt{s_NN}} = 200 GeV'
+collision_system_name: AuAu200
+collision_system_name_tex: 'Au+Au, #sqrt{s_NN}} = 200 GeV'
