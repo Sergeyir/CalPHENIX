@@ -5,6 +5,18 @@ run_name: Run14HeAu200
 number_of_fit_tries: 3 # number of consecutive approximations; used to improve ROOT algorithm; recommended value: 3
 draw_dval_distr: false # if true the program will draw dphi and dz distributions for all bins (pT, zDC, centrality, charge); these distributions will be written in .root files nevertheless of this value. Set true only for final results since all pictures for these distributions take a lot of disk space (~100-200 MB per detector).
 detectors_to_calibrate:
+  -
+    name: PC2
+    means_fit_func_dphi_pos: 'p[0] + p[1]/x[0] + p[2]/(x[0]*x[0]) + p[3]/(x[0]*x[0]*x[0])'
+    means_fit_func_dphi_neg: 'p[0] + p[1]/x[0] + p[2]/(x[0]*x[0]) + p[3]/(x[0]*x[0]*x[0])'
+    means_fit_func_dz_pos: 'p[0] + p[1]/x[0] + p[2]/(x[0]*x[0]) + p[3]*x[0]'
+    means_fit_func_dz_neg: 'p[0] + p[1]/x[0] + p[2]/(x[0]*x[0]) + p[3]*x[0]'
+    sigmas_fit_func_dphi_pos: 'p[0] + p[1]/x[0] + p[2]*x[0]'
+    sigmas_fit_func_dphi_neg: 'p[0] + p[1]/x[0] + p[2]*x[0]'
+    sigmas_fit_func_dz_pos: 'p[0] + p[1]/x[0] + p[2]*x[0]'
+    sigmas_fit_func_dz_neg: 'p[0] + p[1]/x[0] + p[2]*x[0]'
+    abs_max_fit_dphi: 0.015
+    abs_max_fit_dz: 7
   - 
     name: EMCale0
     means_fit_func_dphi_pos: 'p[0] + p[1]/x[0] + p[2]/(x[0]*x[0]) + p[3]/(x[0]*x[0]*x[0])'
