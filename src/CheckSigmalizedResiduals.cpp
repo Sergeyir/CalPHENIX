@@ -12,9 +12,20 @@
 #include "../include/SigmalizedResiduals.hpp"
 
 
-// This program works in 2 modes
-// Mode2 analyzes track residual variable for the specific detector, variable, and charge
-// Mode1 recursively calls the program outside the current process to analyze all configurations
+/*!
+ * Can be provided either 2 (mode 1) or 5 (mode 2) user passed input arguments (here we don't account for the name of executable as a first parameter when it is called).
+ * 
+ * When called in mode 1 (goes over all detectors specified in input file and values such as dphi and dz)
+ * @param[in] argv[1] name of the .yaml input file or name of the directory containing .yaml input file 
+ * @param[in] argv[2] number of threads the program will run on (if no value is passed this value is set to std::thread::hadrware_concurrency())
+ *
+ * When called in mode 2 (only for one detector and value - either dphi or dz)
+ * @param[in] argv[1] name of the .yaml input file or name of the directory containing .yaml input file 
+ * @param[in] argv[2] detector bin (i.e. element of array in "detectors_to_calibrate" field in input .yaml file) 
+ * @param[in] argv[3] variable bin (0 for dphi and 1 for dz) 
+ * @param[in] argv[4] number of threads the program will run on (if no value is passed this value is set to std::thread::hadrware_concurrency())
+ * @param[in] argv[5] if it is doesn't equal to '0' the ProgressBar will show the progress (if no value is passed this value is set to true)
+ */
 int main(int argc, char **argv)
 {
    using namespace SigmalizedResiduals;
