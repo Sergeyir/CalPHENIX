@@ -79,8 +79,8 @@ int main(int argc, char **argv)
       else numberOfThreads = std::thread::hardware_concurrency();
       if (numberOfThreads == 0) CppTools::PrintError("Number of threads must be bigger than 0");
 
-      system("rm -rf tmp/SigmalizedResiduals/*");
-      system(("mkdir -p tmp/SigmalizedResiduals/" + runName).c_str());
+      void(system("rm -rf tmp/SigmalizedResiduals/*"));
+      std::filesystem::create_directories("tmp/SigmalizedResiduals/" + runName);
 
       numberOfIterations = inputYAMLCal["detectors_to_calibrate"].size()*
                            inputYAMLCal["centrality_bins"].size()*
@@ -91,9 +91,9 @@ int main(int argc, char **argv)
       {
          // man ROOT sucks (TF1::Fit is still not thread safe) so I have to call the same program 
          // recursively in shell outside of the current instance to implement multithreading
-         system((static_cast<std::string>("./bin/SigmalizedResiduals ") + 
-                 argv[1] + " " + std::to_string(detectorBin) + " " + 
-                 std::to_string(variableBin) + " 1 0").c_str());;
+         void(system((static_cast<std::string>("./bin/SigmalizedResiduals ") + 
+                      argv[1] + " " + std::to_string(detectorBin) + " " + 
+                      std::to_string(variableBin) + " 1 0").c_str()));
       };
 
       std::vector<std::thread> thrCalls;
@@ -137,11 +137,10 @@ int main(int argc, char **argv)
       if (argc > 5) showProgress = static_cast<bool>(std::stoi(argv[5]));
 
       outputDir = "output/SigmalizedResiduals/" + runName + "/";
-      system(("mkdir -p " + outputDir + "CalibrationParameters").c_str());
+      std::filesystem::create_directories(outputDir + "CalibrationParameters");
 
-      inputFile = 
-         std::unique_ptr<TFile>(TFile::Open(("data/SigmalizedResiduals/" + runName + 
-                                             "/sum.root").c_str(), "READ"));
+      inputFile = std::unique_ptr<TFile>(TFile::Open(("data/SigmalizedResiduals/" + runName + 
+                                                      "/sum.root").c_str(), "READ"));
 
       pTRangeTLatex.SetTextFont(52);
       pTRangeTLatex.SetTextSize(0.06);
@@ -210,7 +209,7 @@ void SigmalizedResiduals::PerformFitsForDifferentCentrAndZDC(const unsigned int 
 
    const std::string detectorName = detector["name"].as<std::string>();
 
-   system(("mkdir -p " + outputDir + detectorName).c_str());
+   std::filesystem::create_directories(outputDir + detectorName);
 
    outputFile = std::unique_ptr<TFile>
       (TFile::Open((outputDir + detectorName + "/all_fits_" + variableName[variableBin] + 

@@ -97,8 +97,8 @@ int main(int argc, char **argv)
       else numberOfThreads = std::thread::hardware_concurrency();
       if (numberOfThreads == 0) CppTools::PrintError("Number of threads must be bigger than 0");
 
-      system(("mkdir -p tmp/progress/EMCTRunByRunOffset/" + runName).c_str());
-      system(("rm -rf tmp/progress/EMCTRunByRunOffset/" + runName + "/*").c_str());
+      std::filesystem::create_directories("tmp/progress/EMCTRunByRunOffset/" + runName);
+      void(system(("rm -rf tmp/progress/EMCTRunByRunOffset/" + runName + "/*").c_str()));
 
       numberOfIterations = inputYAMLCal["sectors_to_calibrate"].size()*runNumbers.size();
 
@@ -109,9 +109,9 @@ int main(int argc, char **argv)
       {
          // man ROOT sucks (TF1::Fit is still not thread safe) so I have to call the same program 
          // recursively in shell outside of the current instance to implement multithreading
-         system((static_cast<std::string>("./bin/EMCTRunByRunOffset ") + 
-                 argv[1] + " " + std::to_string(sectorBin) + " " + 
-                 std::to_string(subprocessNumberOfThreads) + " 0").c_str());;
+         void(system((static_cast<std::string>("./bin/EMCTRunByRunOffset ") + 
+                      argv[1] + " " + std::to_string(sectorBin) + " " + 
+                      std::to_string(subprocessNumberOfThreads) + " 0").c_str()));
       };
 
       std::vector<std::thread> thrCalls;
@@ -151,9 +151,10 @@ int main(int argc, char **argv)
       if (argc > 4) showProgress = static_cast<bool>(std::stoi(argv[4]));
 
       outputDir = "output/EMCTCalibration/" + runName + "/";
-      system(("mkdir -p " + outputDir + "CalibrationParameters").c_str());
-      system(("mkdir -p " + outputDir + inputYAMLCal["sectors_to_calibrate"][std::stoi(argv[2])]
-                                                    ["name"].as<std::string>()).c_str());
+      std::filesystem::create_directories(outputDir + "CalibrationParameters");
+      std::filesystem::create_directories(outputDir + 
+                                          inputYAMLCal["sectors_to_calibrate"][std::stoi(argv[2])]
+                                                      ["name"].as<std::string>());
 
       fitNTries = inputYAMLCal["number_of_fit_tries"].as<unsigned int>();
       fitADCMin = inputYAMLCal["fit_adc_min"].as<double>();

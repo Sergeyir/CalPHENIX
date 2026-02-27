@@ -79,8 +79,8 @@ int main(int argc, char **argv)
       else numberOfThreads = std::thread::hardware_concurrency();
       if (numberOfThreads == 0) CppTools::PrintError("Number of threads must be bigger than 0");
 
-      system("rm -rf tmp/CheckSigmalizedResiduals/*");
-      system(("mkdir -p tmp/CheckSigmalizedResiduals/" + runName).c_str());
+      void(system("rm -rf tmp/CheckSigmalizedResiduals/*"));
+      std::filesystem::create_directories("tmp/CheckSigmalizedResiduals/" + runName);
 
       numberOfIterations = inputYAMLCal["detectors_to_calibrate"].size()*
                                 inputYAMLCal["centrality_bins"].size()*
@@ -91,9 +91,9 @@ int main(int argc, char **argv)
       {
          // man ROOT sucks (TF1::Fit is still not thread safe) so I have to call the same program 
          // recursively in shell outside of the current instance to implement multithreading
-         system((static_cast<std::string>("./bin/CheckSigmalizedResiduals ") + 
-                 argv[1] + " " + std::to_string(detectorBin) + " " + 
-                 std::to_string(variableBin) + " 1 0").c_str());;
+         void(system((static_cast<std::string>("./bin/CheckSigmalizedResiduals ") + 
+                      argv[1] + " " + std::to_string(detectorBin) + " " + 
+                      std::to_string(variableBin) + " 1 0").c_str()));
       };
 
       std::vector<std::thread> thrCalls;
@@ -157,7 +157,7 @@ int main(int argc, char **argv)
                                 inputYAMLCal["zdc_bins"].size();
 
       outputDir = "output/SigmalizedResiduals/" + runName + "/";
-      system(("mkdir -p " + outputDir + "CalibrationParameters").c_str());
+      std::filesystem::remove_all(outputDir + "CalibrationParameters");
 
       pTMin = inputYAMLCal["pt_bins"][0]["min"].as<double>();
       pTMax = inputYAMLCal["pt_bins"][inputYAMLCal["pt_bins"].size() - 1]
@@ -183,7 +183,7 @@ void SigmalizedResiduals::PerformFitsForDifferentCentrAndZDC(const unsigned int 
 
    const std::string detectorName = detector["name"].as<std::string>();
 
-   system(("mkdir -p " + outputDir + detectorName).c_str());
+   std::filesystem::create_directories(outputDir + detectorName);
 
    outputFile = std::unique_ptr<TFile>
       (TFile::Open((outputDir + detectorName + "/all_fits_s" + 
