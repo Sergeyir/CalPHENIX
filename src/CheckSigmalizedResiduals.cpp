@@ -157,7 +157,7 @@ int main(int argc, char **argv)
                                 inputYAMLCal["zdc_bins"].size();
 
       outputDir = "output/SigmalizedResiduals/" + runName + "/";
-      std::filesystem::remove_all(outputDir + "CalibrationParameters");
+      std::filesystem::create_directories(outputDir + "CalibrationParameters");
 
       pTMin = inputYAMLCal["pt_bins"][0]["min"].as<double>();
       pTMax = inputYAMLCal["pt_bins"][inputYAMLCal["pt_bins"].size() - 1]
