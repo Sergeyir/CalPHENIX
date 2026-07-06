@@ -36,7 +36,8 @@ centrality_bins:
   - {min: 30, max: 40}
   - {min: 40, max: 50}
   - {min: 50, max: 60}
-  - {min: 60, max: 72}
+  - {min: 60, max: 70}
+  - {min: 70, max: 84}
 zdc_bins:
   - {min: -75, max: -60, color: 117, marker_style: 24}
   - {min: -60, max: -45, color: 118, marker_style: 25}
