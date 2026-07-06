@@ -68,7 +68,7 @@ int main(int argc, char **argv)
       exit(1);
    }
 
-   TDirectory::AddDirectory(kFALSE);
+   //TDirectory::AddDirectory(kFALSE);
 
    const std::string inputDir = "data/EMCTiming/" + runName + "/";
 

@@ -68,7 +68,7 @@ int main(int argc, char **argv)
       exit(1);
    }
 
-   TDirectory::AddDirectory(kFALSE);
+   //TDirectory::AddDirectory(kFALSE);
 
    drawDValDistr = inputYAMLCal["draw_dval_distr"].as<bool>();
 

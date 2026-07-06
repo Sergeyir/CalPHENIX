@@ -68,8 +68,6 @@ int main(int argc, char **argv)
       exit(1);
    }
 
-   TDirectory::AddDirectory(kFALSE);
-
    drawDValDistr = inputYAMLCal["draw_dval_distr"].as<bool>();
 
    if (argc < 4) // Mode1
@@ -297,7 +295,7 @@ void SigmalizedResiduals::PerformFitsForDifferentCentrAndZDC(const unsigned int 
                                        zDCRanges.size() - 1, &zDCRanges[0],
                                        pTRanges.size() - 1, &pTRanges[0]);
 
-         int zDCBin = 0;
+         //int zDCBin = 0;
          for (const YAML::Node& zDC : inputYAMLCal["zdc_bins"])
          { 
             numberOfCalls++;
@@ -452,7 +450,7 @@ void SigmalizedResiduals::PerformFitsForDifferentCentrAndZDC(const unsigned int 
                                           std::to_string(variableBin));
                progressFile << numberOfCalls;
             }
-            zDCBin++;
+            //zDCBin++;
          }
 
          double meanYMin = 1e31, meanYMax = -1e31;
